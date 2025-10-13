@@ -1,9 +1,6 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import { Routes, Route, Link } from 'react-router-dom';
-import { Nav, Navbar, Container } from 'react-bootstrap';
+import { Nav, Navbar } from 'react-bootstrap';
 import About from './components/About.jsx'
 import Hobbies from './components/Hobbies.jsx'
 import Home from './components/Home.jsx'
