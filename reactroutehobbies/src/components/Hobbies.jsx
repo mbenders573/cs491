@@ -48,9 +48,9 @@ const Hobbies = () => {
                         <img src = {hobby.image} alt = {hobby.name} className = "ps-3 pe-3 pt-2 pb-2 rounded-pill"/>
                     </div>
                     {hobbyIndex === index && (
-                        <>
-                            <span className = "mt-5">{hobby.desc}</span>
-                        </>
+                        <div className = "mt-5">
+                            <span>{hobby.desc}</span>
+                        </div>
                     )}
                 </ListGroup.Item> )}
             </ListGroup>
