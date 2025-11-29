@@ -17,9 +17,10 @@ CREATE TABLE Transcript(
   CrsCode INTEGER,
   Semester CHAR(20) NOT NULL,
   Grade INTEGER,
-  PRIMARY KEY(StudId,CrsCode,Semester),
+  PRIMARY KEY(StudID,CrsCode,Semester),
   CHECK(Grade BETWEEN 0 AND 100),
-  CHECK(StudId > 0)
+  CHECK(StudID > 0),
+  FOREIGN KEY (StudID) REFERENCES Student(Id)
 );
 
 INSERT INTO Student (id,name,address,status) VALUES (1,'John','New York City','senior');
@@ -28,7 +29,15 @@ INSERT INTO Student (id,name,address) VALUES (3,'Joe','New York City');
 
 INSERT INTO Transcript (StudID,CrsCode,Semester,Grade) VALUES (1,1054,"Fall 2023",70);
 INSERT INTO Transcript (StudID,CrsCode,Semester,Grade) VALUES (2,6730,"Spring 2025",100);
-INSERT INTO Transcript (StudID,CrsCode,Semester,Grade) VALUES (3,2093,"Spring 2024",88);
+INSERT INTO Transcript (StudID,CrsCode,Semester,Grade) VALUES (3,1010,"Spring 2022",88);
+--for query 3e
+INSERT INTO Transcript (StudID,CrsCode,Semester,Grade) VALUES (3,2093,"Spring 2024",90);
+INSERT INTO Transcript (StudID,CrsCode,Semester,Grade) VALUES (3,5907,"Spring 2022",95);
+INSERT INTO Transcript (StudID,CrsCode,Semester,Grade) VALUES (3,1205,"Spring 2023",98);
+INSERT INTO Transcript (StudID,CrsCode,Semester,Grade) VALUES (3,9969,"Fall 2024",96);
+
+SELECT * FROM Student;
+SELECT * FROM Transcript;
 
 --UPDATE Student SET address = '456 Avenue' WHERE id = 1;
 
@@ -43,8 +52,12 @@ INSERT INTO Transcript (StudID,CrsCode,Semester,Grade) VALUES (3,2093,"Spring 20
 --3a
 SELECT name FROM Student WHERE Status = "freshman";
 --3b
-SELECT name, StudID FROM Student, Transcript WHERE id = StudID AND status = "freshman";
+SELECT name, Id AS StudID FROM Student WHERE id = StudID AND status = "freshman";
 --3c
-
---If we had another table Transcript, we could do a join like this:
+SELECT COUNT(*) AS NumNYCStudents FROM Student WHERE address = "New York City";
+--3d
+SELECT Status, COUNT(*) AS NumStudents FROM Student GROUP BY Status;
+--3e (90-100 is A)
+SELECT Name FROM Student JOIN Transcript ON Student.Id = Transcript.StudID WHERE Transcript.Grade >= 90 GROUP BY Student.Id, Student.Name HAVING COUNT(*) >= 4;
+--we could do a join like this:
 --SELECT name, CrsCode, Grade FROM Student, Transcript WHERE id = transcriptID AND status = 'senior';
